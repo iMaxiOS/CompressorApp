@@ -34,7 +34,7 @@ final class OnboardingViewController: UIViewController {
   
   private let pageControl: UIPageControl = {
     let pc = UIPageControl()
-    pc.currentPageIndicatorTintColor = .systemBlue
+    pc.currentPageIndicatorTintColor = #colorLiteral(red: 0.3249999881, green: 0.4120000005, blue: 0.92900002, alpha: 1)
     pc.pageIndicatorTintColor = .systemGray4
     pc.isUserInteractionEnabled = false
     pc.translatesAutoresizingMaskIntoConstraints = false
@@ -45,7 +45,7 @@ final class OnboardingViewController: UIViewController {
     var cfg = UIButton.Configuration.filled()
     cfg.title = "Continue"
     cfg.cornerStyle = .large
-    cfg.baseBackgroundColor = .systemBlue
+    cfg.baseBackgroundColor = #colorLiteral(red: 0.3249999881, green: 0.4120000005, blue: 0.92900002, alpha: 1)
     cfg.baseForegroundColor = .white
     cfg.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
     let b = UIButton(configuration: cfg)

@@ -6,13 +6,71 @@
 //
 
 import UIKit
+import AVFoundation
+
 final class PreviewAfterCompressViewController: UIViewController {
 
   private let viewModel: PreviewAfterCompressViewModel
 
-  private let preview = UIView()
-  private let oldLabel = UILabel()
-  private let newLabel = UILabel()
+  private let preview = PlayerView()
+  private var player: AVPlayer?
+  
+  private lazy var oldSizeVStack: UIStackView = {
+    let stack = UIStackView()
+    stack.axis = .vertical
+    stack.alignment = .center
+    stack.spacing = 6
+    return stack
+  }()
+  
+  private lazy var nowVStack: UIStackView = {
+    let stack = UIStackView()
+    stack.axis = .vertical
+    stack.alignment = .center
+    stack.spacing = 6
+    return stack
+  }()
+  
+  private lazy var rightIcon: UIImageView = {
+    let im = UIImageView()
+    im.image = UIImage(named: "double_right_icon")
+    im.contentMode = .scaleAspectFit
+    return im
+  }()
+  
+  private lazy var nowLabel: UILabel = {
+    let label = UILabel()
+    label.text = "Now"
+    label.textAlignment = .center
+    label.font = .systemFont(ofSize: 16, weight: .medium)
+    label.textColor = .secondaryLabel
+    return label
+  }()
+  
+  private lazy var oldSizeLabel: UILabel = {
+    let label = UILabel()
+    label.text = "Old Size"
+    label.textAlignment = .center
+    label.font = .systemFont(ofSize: 16, weight: .medium)
+    label.textColor = .secondaryLabel
+    return label
+  }()
+  
+  private lazy var nowByteLabel: UILabel = {
+    let label = UILabel()
+    label.textColor = #colorLiteral(red: 0.3249999881, green: 0.4120000005, blue: 0.92900002, alpha: 1)
+    label.textAlignment = .center
+    label.font = .systemFont(ofSize: 24, weight: .semibold)
+    return label
+  }()
+  
+  private lazy var oldByteLabel: UILabel = {
+    let label = UILabel()
+    label.textAlignment = .center
+    label.font = .systemFont(ofSize: 24, weight: .semibold)
+    return label
+  }()
+  
   private let deleteButton = UIButton(type: .system)
   private let keepButton = UIButton(type: .system)
 
@@ -32,66 +90,110 @@ final class PreviewAfterCompressViewController: UIViewController {
     view.backgroundColor = .systemBackground
     title = "Video Compressor"
 
-    preview.backgroundColor = .black
     preview.layer.cornerRadius = 16
     preview.layer.masksToBounds = true
-    preview.translatesAutoresizingMaskIntoConstraints = false
-
-    oldLabel.text = "Old Size\n30.88 MB"
-    oldLabel.numberOfLines = 2
-    oldLabel.font = .systemFont(ofSize: 20, weight: .semibold)
-    oldLabel.translatesAutoresizingMaskIntoConstraints = false
-
-    newLabel.text = "Now\n15.75 MB"
-    newLabel.numberOfLines = 2
-    newLabel.textAlignment = .right
-    newLabel.font = .systemFont(ofSize: 20, weight: .semibold)
-    newLabel.textColor = .systemBlue
-    newLabel.translatesAutoresizingMaskIntoConstraints = false
+    
+    [preview, nowVStack, rightIcon, oldSizeVStack, keepButton, deleteButton].forEach {
+      $0.translatesAutoresizingMaskIntoConstraints = false
+      view.addSubview($0)
+    }
 
     deleteButton.setTitle("Delete Original Video", for: .normal)
-    deleteButton.titleLabel?.font = .systemFont(ofSize: 15)
-    deleteButton.setTitleColor(.systemBlue, for: .normal)
-    deleteButton.translatesAutoresizingMaskIntoConstraints = false
+    deleteButton.titleLabel?.font = .systemFont(ofSize: 16, weight: .medium)
 
-    var cfg = UIButton.Configuration.filled()
-    cfg.title = "Keep Original Video"
-    cfg.cornerStyle = .large
-    cfg.baseBackgroundColor = .systemIndigo
-    cfg.baseForegroundColor = .white
-    cfg.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
-    keepButton.configuration = cfg
-    keepButton.translatesAutoresizingMaskIntoConstraints = false
+    var keepCfg = UIButton.Configuration.filled()
+    keepCfg.title = "Keep Original Video"
+    keepCfg.cornerStyle = .large
+    keepCfg.baseBackgroundColor = #colorLiteral(red: 0.3249999881, green: 0.4120000005, blue: 0.92900002, alpha: 1)
+    keepCfg.baseForegroundColor = .white
+    keepCfg.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
+    keepButton.configuration = keepCfg
 
-    [preview, oldLabel, newLabel, deleteButton, keepButton].forEach(view.addSubview)
+    view.addSubview(preview)
+    view.addSubview(oldSizeVStack)
+    view.addSubview(rightIcon)
+    view.addSubview(nowVStack)
+    oldSizeVStack.addArrangedSubview(oldSizeLabel)
+    oldSizeVStack.addArrangedSubview(oldByteLabel)
+    nowVStack.addArrangedSubview(nowLabel)
+    nowVStack.addArrangedSubview(nowByteLabel)
+    view.addSubview(deleteButton)
+    view.addSubview(keepButton)
 
     NSLayoutConstraint.activate([
       preview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
       preview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
       preview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-      preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: 0.95),
+      preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: 1),
+      
+      oldSizeVStack.topAnchor.constraint(equalTo: preview.bottomAnchor, constant: 18),
+      oldSizeVStack.leadingAnchor.constraint(equalTo: preview.leadingAnchor, constant: 10),
+      
+      rightIcon.widthAnchor.constraint(equalToConstant: 40),
+      rightIcon.heightAnchor.constraint(equalToConstant: 40),
+      rightIcon.centerYAnchor.constraint(equalTo: oldSizeVStack.centerYAnchor),
+      rightIcon.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+      
+      nowVStack.topAnchor.constraint(equalTo: preview.bottomAnchor, constant: 18),
+      nowVStack.trailingAnchor.constraint(equalTo: preview.trailingAnchor, constant: -10),
 
-      oldLabel.topAnchor.constraint(equalTo: preview.bottomAnchor, constant: 12),
-      oldLabel.leadingAnchor.constraint(equalTo: preview.leadingAnchor),
-
-      newLabel.topAnchor.constraint(equalTo: oldLabel.topAnchor),
-      newLabel.trailingAnchor.constraint(equalTo: preview.trailingAnchor),
-
-      deleteButton.topAnchor.constraint(equalTo: oldLabel.bottomAnchor, constant: 10),
+      deleteButton.bottomAnchor.constraint(equalTo: keepButton.topAnchor, constant: -16),
       deleteButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
 
-      keepButton.topAnchor.constraint(equalTo: deleteButton.bottomAnchor, constant: 12),
       keepButton.leadingAnchor.constraint(equalTo: preview.leadingAnchor),
       keepButton.trailingAnchor.constraint(equalTo: preview.trailingAnchor),
-      keepButton.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -18),
+      keepButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+      keepButton.heightAnchor.constraint(equalToConstant: 60),
     ])
   }
 
   private func bind() {
+    oldByteLabel.text = viewModel.oldSizeText
+    nowByteLabel.text = viewModel.newSizeText
+
     deleteButton.addTarget(self, action: #selector(deleteTapped), for: .touchUpInside)
     keepButton.addTarget(self, action: #selector(keepTapped), for: .touchUpInside)
+
+    viewModel.onKeepOriginal = { [weak self] in
+      self?.navigationController?.popToRootViewController(animated: true)
+    }
+
+    viewModel.onDeleteOriginal = { [weak self] in
+      self?.navigationController?.popToRootViewController(animated: true)
+    }
+
+    let p = AVPlayer(url: viewModel.videoURL)
+    p.isMuted = true
+    player = p
+    preview.player = p
+    p.play()
+
+    NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
+                                          object: p.currentItem,
+                                          queue: .main) { _ in
+      p.seek(to: .zero)
+      p.play()
+    }
   }
 
-  @objc private func deleteTapped() { viewModel.deleteOriginalTapped() }
-  @objc private func keepTapped() { viewModel.keepOriginalTapped() }
+  @objc private func keepTapped() {
+    viewModel.keepTapped()
+  }
+
+  @objc private func deleteTapped() {
+    let alert = UIAlertController(
+      title: "Delete original video?",
+      message: "You can’t undo this action.",
+      preferredStyle: .alert
+    )
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+    alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { [weak self] _ in
+      self?.viewModel.deleteTapped()
+    })
+    present(alert, animated: true)
+  }
+
+  deinit {
+    NotificationCenter.default.removeObserver(self)
+  }
 }
