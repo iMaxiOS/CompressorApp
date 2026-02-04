@@ -24,7 +24,10 @@ final class VideoCompressorListViewModel {
   
   private static func loadVideosFromBundle() -> [URL] {
     let names = [
-      "video08",
+      "video",
+      "video02",
+      "video03",
+      "video04",
     ]
     
     return names.compactMap { name in
