@@ -30,8 +30,8 @@ final class CompressingViewModel {
     Int64(Double(originalSizeBytes) * quality.estimatedRatio)
   }
 
-  var originalSizeText: String { Self.format(bytes: originalSizeBytes) }
-  var compressedSizeText: String { Self.format(bytes: compressedSizeBytes) }
+  var originalSizeText: String { String.format(bytes: originalSizeBytes) }
+  var compressedSizeText: String { String.format(bytes: compressedSizeBytes) }
 
   func start() {
     stopTimer()
@@ -59,12 +59,5 @@ final class CompressingViewModel {
   private func stopTimer() {
     timer?.invalidate()
     timer = nil
-  }
-
-  private static func format(bytes: Int64) -> String {
-    let formatter = ByteCountFormatter()
-    formatter.allowedUnits = [.useMB, .useGB]
-    formatter.countStyle = .file
-    return formatter.string(fromByteCount: max(0, bytes))
   }
 }

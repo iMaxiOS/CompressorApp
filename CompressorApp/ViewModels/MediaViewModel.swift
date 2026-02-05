@@ -16,28 +16,28 @@ final class MediaViewModel {
 
   init() {
     items = [
-      .init(title: "Duplicate Photos", countText: "1746 Items",
-            icon: UIImage(systemName: "photo"), iconBackground: UIColor.systemIndigo.withAlphaComponent(0.18),
+      .init(title: "Duplicate Photos", countText: "6 Items",
+            icon: UIImage(named: "future_circle_icon"),
             route: .duplicatePhotos),
 
-      .init(title: "Similar Photos", countText: "1746 Items",
-            icon: UIImage(systemName: "video"), iconBackground: UIColor.systemIndigo.withAlphaComponent(0.18),
+      .init(title: "Similar Photos", countText: "6 Items",
+            icon: UIImage(named: "camera_circle_icon"),
             route: .similarPhotos),
 
-      .init(title: "Screenshots", countText: "1746 Items",
-            icon: UIImage(systemName: "crop"), iconBackground: UIColor.systemIndigo.withAlphaComponent(0.18),
+      .init(title: "Screenshots", countText: "6 Items",
+            icon: UIImage(named: "screenshort_circle_icon"),
             route: .screenshots),
 
-      .init(title: "Live Photos", countText: "1746 Items",
-            icon: UIImage(systemName: "livephoto"), iconBackground: UIColor.systemIndigo.withAlphaComponent(0.18),
+      .init(title: "Live Photos", countText: "6 Items",
+            icon: UIImage(named: "live_circle_icon"),
             route: .livePhotos),
 
-      .init(title: "Screen Recordings", countText: "1746 Items",
-            icon: UIImage(systemName: "rectangle.on.rectangle"), iconBackground: UIColor.systemIndigo.withAlphaComponent(0.18),
+      .init(title: "Screen Recordings", countText: "6 Items",
+            icon: UIImage(named: "recording_circle_icon"),
             route: .screenRecordings),
 
-      .init(title: "Similar Videos", countText: "1746 Items",
-            icon: UIImage(systemName: "video.fill"), iconBackground: UIColor.systemIndigo.withAlphaComponent(0.18),
+      .init(title: "Similar Videos", countText: "6 Items",
+            icon: UIImage(named: "video_circle_icon"),
             route: .similarVideos),
     ]
   }

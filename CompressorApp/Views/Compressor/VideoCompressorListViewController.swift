@@ -48,43 +48,47 @@ final class VideoCompressorListViewController: UIViewController {
     viewBadge.layer.masksToBounds = false
     viewBadge.layer.shadowColor = UIColor.black.cgColor
     viewBadge.layer.shadowRadius = 4
-    viewBadge.layer.cornerRadius = 10
+    viewBadge.layer.cornerRadius = 5
     viewBadge.layer.cornerCurve = .continuous
     viewBadge.layer.shadowOpacity = 0.2
     viewBadge.layer.shadowOffset = CGSize(width: 0, height: 2)
-    viewBadge.translatesAutoresizingMaskIntoConstraints = false
     
     hStack.axis = .horizontal
     hStack.spacing = 8
     hStack.translatesAutoresizingMaskIntoConstraints = false
     
-    imageBadge.image = UIImage(systemName: "video.fill")
+    imageBadge.image = UIImage(named: "video_black_icon")
     imageBadge.tintColor = .label
-    imageBadge.translatesAutoresizingMaskIntoConstraints = false
-
+    
     countBadge.text = "\(viewModel.videos.count) Videos"
     countBadge.font = .systemFont(ofSize: 14, weight: .regular)
     countBadge.textColor = .secondaryLabel
-    countBadge.translatesAutoresizingMaskIntoConstraints = false
 
     collectionView.backgroundColor = .clear
     collectionView.dataSource = self
     collectionView.delegate = self
     collectionView.register(VideoCell.self, forCellWithReuseIdentifier: VideoCell.reuseId)
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    
+    [viewBadge, collectionView].forEach {
+      $0.translatesAutoresizingMaskIntoConstraints = false
+      view.addSubview($0)
+    }
 
-
-    view.addSubview(viewBadge)
     viewBadge.addSubview(hStack)
     hStack.addArrangedSubview(imageBadge)
     hStack.addArrangedSubview(countBadge)
-    view.addSubview(collectionView)
 
     NSLayoutConstraint.activate([
       viewBadge.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 12),
       viewBadge.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-      viewBadge.widthAnchor.constraint(equalToConstant: 126),
-      viewBadge.heightAnchor.constraint(equalToConstant: 32),
+      
+      hStack.topAnchor.constraint(equalTo: viewBadge.topAnchor, constant: 5),
+      hStack.leadingAnchor.constraint(equalTo: viewBadge.leadingAnchor, constant: 8),
+      hStack.trailingAnchor.constraint(equalTo: viewBadge.trailingAnchor, constant: -8),
+      hStack.bottomAnchor.constraint(equalTo: viewBadge.bottomAnchor, constant: -5),
+      
+      imageBadge.heightAnchor.constraint(equalToConstant: 24),
+      imageBadge.widthAnchor.constraint(equalToConstant: 24),
       
       hStack.centerXAnchor.constraint(equalTo: viewBadge.centerXAnchor),
       hStack.centerYAnchor.constraint(equalTo: viewBadge.centerYAnchor),

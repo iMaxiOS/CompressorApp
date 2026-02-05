@@ -22,16 +22,9 @@ final class PreviewAfterCompressViewModel {
     self.newSizeBytes = max(0, newSizeBytes)
   }
 
-  var oldSizeText: String { Self.format(bytes: oldSizeBytes) }
-  var newSizeText: String { Self.format(bytes: newSizeBytes) }
+  var oldSizeText: String { String.format(bytes: oldSizeBytes) }
+  var newSizeText: String { String.format(bytes: newSizeBytes) }
 
   func keepTapped() { onKeepOriginal?() }
   func deleteTapped() { onDeleteOriginal?() }
-
-  private static func format(bytes: Int64) -> String {
-    let formatter = ByteCountFormatter()
-    formatter.allowedUnits = [.useMB, .useGB]
-    formatter.countStyle = .file
-    return formatter.string(fromByteCount: bytes)
-  }
 }

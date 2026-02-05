@@ -54,7 +54,7 @@ final class VideoQualityViewModel {
   }
   
   var originalSizeText: String {
-    Self.format(bytes: originalSizeBytes)
+    String.format(bytes: originalSizeBytes)
   }
   
   var estimatedSizeBytes: Int64 {
@@ -62,13 +62,6 @@ final class VideoQualityViewModel {
   }
   
   var estimatedSizeText: String {
-    Self.format(bytes: estimatedSizeBytes)
-  }
-  
-  private static func format(bytes: Int64) -> String {
-    let formatter = ByteCountFormatter()
-    formatter.allowedUnits = [.useMB, .useGB]
-    formatter.countStyle = .file
-    return formatter.string(fromByteCount: bytes)
+    String.format(bytes: estimatedSizeBytes)
   }
 }

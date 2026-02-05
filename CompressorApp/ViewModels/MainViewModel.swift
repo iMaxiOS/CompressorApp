@@ -25,20 +25,20 @@ final class MainViewModel {
     
     self.storage = .init(
       title: "iPhone Storage",
-      subtitle: "28.7 GB of 128.0 GB",
-      percentText: "44%",
-      percentValue: 0.44
+      subtitle: "21.7 GB of 128.0 GB",
+      percentText: "17%",
+      percentValue: 0.17
     )
     
     self.compressorSection = .init(
       title: "Video Compressor",
-      subtitle: "12267 Media • 54.7 GB",
+      subtitle: "4 Media • 54.7 GB",
       isLocked: !hasPhotoAccess
     )
     
     self.mediaSection = .init(
       title: "Media",
-      subtitle: "12267 Media • 54.7 GB",
+      subtitle: "6 Media • 54.7 GB",
       isLocked: !hasPhotoAccess
     )
   }

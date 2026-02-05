@@ -20,6 +20,5 @@ struct MediaItem: Hashable {
   let title: String
   let countText: String
   let icon: UIImage?
-  let iconBackground: UIColor
   let route: MediaRoute
 }
