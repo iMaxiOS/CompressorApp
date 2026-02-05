@@ -41,6 +41,8 @@ final class VideoCompressorListViewController: UIViewController {
   private func setupUI() {
     view.backgroundColor = .systemBackground
     title = "Video Compressor"
+    navigationItem.largeTitleDisplayMode = .always
+    navigationController?.navigationBar.prefersLargeTitles = true
     
     viewBadge.backgroundColor = .systemBackground
     viewBadge.layer.masksToBounds = false
@@ -137,7 +139,8 @@ extension VideoCompressorListViewController: UICollectionViewDataSource, UIColle
   func collectionView(_ collectionView: UICollectionView,
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
-    let w = (collectionView.bounds.width - 8) / 2
+    let spacing: CGFloat = 8
+    let w = (collectionView.bounds.width - spacing) / 2
     return CGSize(width: w, height: w)
   }
 }

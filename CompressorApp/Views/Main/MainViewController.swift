@@ -103,22 +103,22 @@ final class MainViewController: UIViewController {
       if self.viewModel.hasPhotoAccess {
         let vm = VideoCompressorListViewModel()
         let vc = VideoCompressorListViewController(viewModel: vm)
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
       } else {
         self.requestPhotos()
       }
     }
     
-//    mediaCard.onTapMedia = { [weak self] in
-//      guard let self else { return }
-//      if self.viewModel.hasPhotoAccess {
-//        let vm = VideoCompressorListViewModel()
-//        let vc = VideoCompressorListViewController(viewModel: vm)
-//        self.navigationController?.pushViewController(vc, animated: true)
-//      } else {
-//        self.requestPhotos()
-//      }
-//    }
+    mediaCard.onTapMedia = { [weak self] in
+      guard let self else { return }
+      if self.viewModel.hasPhotoAccess {
+        let vm = MediaViewModel()
+        let vc = MediaViewController(viewModel: vm)
+        navigationController?.pushViewController(vc, animated: true)
+      } else {
+        self.requestPhotos()
+      }
+    }
   }
   
   private func requestPhotos() {
