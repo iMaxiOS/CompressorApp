@@ -31,15 +31,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
   func setRoot(_ vc: UIViewController, animated: Bool = true) {
     guard let window else { return }
-      let nav = UINavigationController(rootViewController: vc)
-
-      if animated {
-        UIView.transition(with: window, duration: 0.25, options: .transitionCrossDissolve) {
-          window.rootViewController = nav
-        }
-      } else {
+    let nav = UINavigationController(rootViewController: vc)
+    nav.navigationBar.tintColor = .label
+    vc.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+    
+    if animated {
+      UIView.transition(with: window, duration: 0.25, options: .transitionCrossDissolve) {
         window.rootViewController = nav
       }
+    } else {
+      window.rootViewController = nav
+    }
   }
   
   func sceneDidDisconnect(_ scene: UIScene) {
@@ -72,4 +74,3 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   
   
 }
-

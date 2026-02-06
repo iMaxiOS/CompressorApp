@@ -107,6 +107,6 @@ extension MediaViewController: UICollectionViewDataSource, UICollectionViewDeleg
     let spacing: CGFloat = 8
     let total = insets.left + insets.right + spacing
     let width = (collectionView.bounds.width - total) / 2
-    return CGSize(width: width, height: 140)
+    return CGSize(width: width, height: UIScreen.screenType == .small ? 140 : 170)
   }
 }

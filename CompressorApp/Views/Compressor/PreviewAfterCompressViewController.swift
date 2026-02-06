@@ -88,7 +88,7 @@ final class PreviewAfterCompressViewController: UIViewController {
 
   private func setupUI() {
     view.backgroundColor = .systemBackground
-    title = "Video Compressor"
+    navigationItem.largeTitleDisplayMode = .never
 
     preview.layer.cornerRadius = 16
     preview.layer.masksToBounds = true
@@ -106,7 +106,6 @@ final class PreviewAfterCompressViewController: UIViewController {
     keepCfg.cornerStyle = .large
     keepCfg.baseBackgroundColor = #colorLiteral(red: 0.3249999881, green: 0.4120000005, blue: 0.92900002, alpha: 1)
     keepCfg.baseForegroundColor = .white
-    keepCfg.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
     keepButton.configuration = keepCfg
 
     view.addSubview(preview)
@@ -121,10 +120,10 @@ final class PreviewAfterCompressViewController: UIViewController {
     view.addSubview(keepButton)
 
     NSLayoutConstraint.activate([
-      preview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+      preview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIScreen.screenType == .small ? 5 : 16),
       preview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
       preview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-      preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: 1),
+      preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: UIScreen.screenType == .small ? 1 : 1.2),
       
       oldSizeVStack.topAnchor.constraint(equalTo: preview.bottomAnchor, constant: 18),
       oldSizeVStack.leadingAnchor.constraint(equalTo: preview.leadingAnchor, constant: 10),

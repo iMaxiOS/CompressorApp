@@ -44,7 +44,7 @@ final class OnboardingCell: UICollectionViewCell {
       imageView.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 28),
       imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
       imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-      imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.55),
+      imageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: UIScreen.screenType == .small ? 0.52 : 0.55),
       
       titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 18),
       titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 24),

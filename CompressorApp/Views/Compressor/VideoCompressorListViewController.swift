@@ -43,6 +43,7 @@ final class VideoCompressorListViewController: UIViewController {
     title = "Video Compressor"
     navigationItem.largeTitleDisplayMode = .always
     navigationController?.navigationBar.prefersLargeTitles = true
+
     
     viewBadge.backgroundColor = .systemBackground
     viewBadge.layer.masksToBounds = false

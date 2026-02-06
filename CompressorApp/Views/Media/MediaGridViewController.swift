@@ -97,9 +97,8 @@ final class MediaGridViewController: UIViewController {
     
     var cfg = UIButton.Configuration.filled()
     cfg.cornerStyle = .large
-    cfg.baseBackgroundColor = .systemIndigo
+    cfg.baseBackgroundColor = #colorLiteral(red: 0.3249999881, green: 0.4120000005, blue: 0.92900002, alpha: 1)
     cfg.baseForegroundColor = .white
-    cfg.contentInsets = .init(top: 14, leading: 16, bottom: 14, trailing: 16)
     bottomButton.configuration = cfg
     bottomButton.translatesAutoresizingMaskIntoConstraints = false
     bottomButton.addTarget(self, action: #selector(deleteTapped), for: .touchUpInside)
@@ -155,7 +154,7 @@ final class MediaGridViewController: UIViewController {
       bottomButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
       bottomButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
       bottomButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10),
-      bottomButton.heightAnchor.constraint(equalToConstant: 46),
+      bottomButton.heightAnchor.constraint(equalToConstant: 60),
     ])
     
     render()

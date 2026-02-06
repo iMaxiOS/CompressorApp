@@ -47,14 +47,13 @@ final class MediaItemCell: UICollectionViewCell {
       iconView.widthAnchor.constraint(equalToConstant: 44),
       iconView.heightAnchor.constraint(equalToConstant: 44),
 
-      titleLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 14),
-      titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-      titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -12),
-
       countLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6),
       countLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
       countLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-      countLabel.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -14),
+      countLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+      
+      titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -40),
+      titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
     ])
   }
 

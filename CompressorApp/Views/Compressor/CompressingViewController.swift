@@ -29,7 +29,7 @@ final class CompressingViewController: UIViewController {
   }
   
   private func setupUI() {
-    view.backgroundColor = UIColor(red: 0.55, green: 0.72, blue: 0.98, alpha: 1)
+    view.backgroundColor = #colorLiteral(red: 0.5291496515, green: 0.7021511197, blue: 0.9844933152, alpha: 1)
     
     spinner.color = .white
     spinner.translatesAutoresizingMaskIntoConstraints = false
@@ -55,9 +55,8 @@ final class CompressingViewController: UIViewController {
     var cfg = UIButton.Configuration.filled()
     cfg.title = "Cancel"
     cfg.cornerStyle = .large
-    cfg.baseBackgroundColor = .systemIndigo
+    cfg.baseBackgroundColor = #colorLiteral(red: 0.3249999881, green: 0.4120000005, blue: 0.92900002, alpha: 1)
     cfg.baseForegroundColor = .white
-    cfg.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
     cancelButton.configuration = cfg
     cancelButton.translatesAutoresizingMaskIntoConstraints = false
     

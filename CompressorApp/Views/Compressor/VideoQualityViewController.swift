@@ -91,7 +91,7 @@ final class VideoQualityViewController: UIViewController {
   
   private func setupUI() {
     view.backgroundColor = .systemBackground
-    title = "Video Compressor"
+    navigationItem.largeTitleDisplayMode = .never
     
     preview.layer.cornerRadius = 16
     preview.layer.masksToBounds = true
@@ -104,9 +104,8 @@ final class VideoQualityViewController: UIViewController {
     var cfg = UIButton.Configuration.filled()
     cfg.title = "Compress"
     cfg.cornerStyle = .large
-    cfg.baseBackgroundColor = .systemIndigo
+    cfg.baseBackgroundColor = #colorLiteral(red: 0.3249999881, green: 0.4120000005, blue: 0.92900002, alpha: 1)
     cfg.baseForegroundColor = .white
-    cfg.contentInsets = .init(top: 16, leading: 16, bottom: 16, trailing: 16)
     compressButton.configuration = cfg
     
     nowVStack.addArrangedSubview(nowLabel)
@@ -115,10 +114,10 @@ final class VideoQualityViewController: UIViewController {
     willVStack.addArrangedSubview(willByteLabel)
     
     NSLayoutConstraint.activate([
-      preview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+      preview.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: UIScreen.screenType == .small ? 5 : 16),
       preview.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
       preview.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-      preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: 0.7),
+      preview.heightAnchor.constraint(equalTo: preview.widthAnchor, multiplier: UIScreen.screenType == .small ? 0.7 : 0.85),
       
       nowVStack.topAnchor.constraint(equalTo: preview.bottomAnchor, constant: 18),
       nowVStack.leadingAnchor.constraint(equalTo: preview.leadingAnchor, constant: 10),
@@ -135,17 +134,17 @@ final class VideoQualityViewController: UIViewController {
       low.bottomAnchor.constraint(equalTo: medium.topAnchor, constant: -10),
       low.leadingAnchor.constraint(equalTo: preview.leadingAnchor),
       low.trailingAnchor.constraint(equalTo: preview.trailingAnchor),
-      low.heightAnchor.constraint(equalToConstant: 60),
+      low.heightAnchor.constraint(equalToConstant: UIScreen.screenType == .small ? 50 : 60),
       
       medium.bottomAnchor.constraint(equalTo: high.topAnchor, constant: -10),
       medium.leadingAnchor.constraint(equalTo: low.leadingAnchor),
       medium.trailingAnchor.constraint(equalTo: low.trailingAnchor),
-      medium.heightAnchor.constraint(equalToConstant: 60),
+      medium.heightAnchor.constraint(equalToConstant: UIScreen.screenType == .small ? 50 : 60),
       
       high.bottomAnchor.constraint(equalTo: compressButton.topAnchor, constant: -18),
       high.leadingAnchor.constraint(equalTo: low.leadingAnchor),
       high.trailingAnchor.constraint(equalTo: low.trailingAnchor),
-      high.heightAnchor.constraint(equalToConstant: 60),
+      high.heightAnchor.constraint(equalToConstant: UIScreen.screenType == .small ? 50 : 60),
       
       compressButton.heightAnchor.constraint(equalToConstant: 60),
       compressButton.leadingAnchor.constraint(equalTo: preview.leadingAnchor),

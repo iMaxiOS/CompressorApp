@@ -20,7 +20,6 @@ enum VideoQualityOption: CaseIterable {
     }
   }
   
-  // Примерные коэффициенты (можешь позже тюнить)
   var estimatedRatio: Double {
     switch self {
     case .low: return 0.50

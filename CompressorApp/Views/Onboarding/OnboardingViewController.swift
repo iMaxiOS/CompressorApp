@@ -47,7 +47,6 @@ final class OnboardingViewController: UIViewController {
     cfg.cornerStyle = .large
     cfg.baseBackgroundColor = #colorLiteral(red: 0.3249999881, green: 0.4120000005, blue: 0.92900002, alpha: 1)
     cfg.baseForegroundColor = .white
-    cfg.contentInsets = NSDirectionalEdgeInsets(top: 16, leading: 16, bottom: 16, trailing: 16)
     let b = UIButton(configuration: cfg)
     b.translatesAutoresizingMaskIntoConstraints = false
     return b
@@ -95,6 +94,7 @@ final class OnboardingViewController: UIViewController {
       collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
       
+      continueButton.heightAnchor.constraint(equalToConstant: 60),
       continueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
       continueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
       continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -18),

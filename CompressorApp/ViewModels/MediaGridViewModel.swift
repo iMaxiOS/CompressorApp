@@ -38,8 +38,8 @@ final class MediaGridViewModel {
   var selectedCount: Int { selected.count }
   var selectedBytes: Int64 {
     var sum: Int64 = 0
-    for g in groups {
-      for a in g.assets where selected.contains(a.id) {
+    for group in groups {
+      for a in group.assets where selected.contains(a.id) {
         sum += a.bytes
       }
     }
@@ -86,8 +86,8 @@ final class MediaGridViewModel {
   }
 
   func confirmDelete() {
-    groups = groups.map { g in
-      var g2 = g
+    groups = groups.map { group in
+      var g2 = group
       g2.assets.removeAll { selected.contains($0.id) }
       return g2
     }.filter { !$0.assets.isEmpty }

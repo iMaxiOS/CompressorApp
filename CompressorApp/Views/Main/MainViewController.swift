@@ -7,11 +7,21 @@
 
 import UIKit
 
+extension UIScreen {
+  static var uiScale: CGFloat {
+    let h = main.bounds.height
+    let base: CGFloat = 812 // iPhone 11/12/13 mini-ish
+    return max(0.86, min(1.12, h / base))
+  }
+}
+
+extension CGFloat {
+  var a: CGFloat { self * UIScreen.uiScale }
+}
+
 final class MainViewController: UIViewController {
   
   private let viewModel: MainViewModel
-  
-  private let headerView = UIView()
   private let storageTitleLabel = UILabel()
   private let storageSubtitleLabel = UILabel()
   private let ringView = RingView()
@@ -27,7 +37,7 @@ final class MainViewController: UIViewController {
   private let imagesHStack: UIStackView = {
     let h = UIStackView()
     h.axis = .horizontal
-    h.spacing = 5
+    h.spacing = 8
     h.distribution = .fillEqually
     h.translatesAutoresizingMaskIntoConstraints = false
     return h
@@ -134,7 +144,6 @@ final class MainViewController: UIViewController {
   }
   
   private func render() {
-    headerView.backgroundColor = #colorLiteral(red: 0.5291496515, green: 0.7021511197, blue: 0.9844933152, alpha: 1)
     storageTitleLabel.text = viewModel.storage.title
     storageSubtitleLabel.text = viewModel.storage.subtitle
     ringView.progress = CGFloat(viewModel.storage.percentValue)
@@ -158,10 +167,6 @@ final class MainViewController: UIViewController {
   }
   
   private func setupUI() {
-    headerView.translatesAutoresizingMaskIntoConstraints = false
-    view.addSubview(headerView)
-    
-    
     storageTitleLabel.font = .systemFont(ofSize: 16, weight: .regular)
     storageTitleLabel.textColor = .white
     storageTitleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -175,8 +180,8 @@ final class MainViewController: UIViewController {
     titleVStack.addArrangedSubview(storageTitleLabel)
     titleVStack.addArrangedSubview(storageSubtitleLabel)
     
-    headerView.addSubview(titleVStack)
-    headerView.addSubview(ringView)
+    view.addSubview(titleVStack)
+    view.addSubview(ringView)
     
     cardContainer.backgroundColor = .systemBackground
     cardContainer.layer.cornerRadius = 30
@@ -197,18 +202,13 @@ final class MainViewController: UIViewController {
     imagesHStack.addArrangedSubview(mediaThumbRight)
     
     NSLayoutConstraint.activate([
-      headerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-      headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      headerView.heightAnchor.constraint(equalToConstant: 260),
+      ringView.topAnchor.constraint(equalTo: view.topAnchor, constant: UIScreen.screenType == .small ? 50 : 80),
+      ringView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+      ringView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: UIScreen.screenType == .small ? 0.35 : 0.4),
+      ringView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: UIScreen.screenType == .small ? 0.35 : 0.4),
       
-      titleVStack.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 12),
+      titleVStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 12),
       titleVStack.centerYAnchor.constraint(equalTo: ringView.centerYAnchor),
-      
-      ringView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
-      ringView.centerYAnchor.constraint(equalTo: headerView.centerYAnchor),
-      ringView.widthAnchor.constraint(equalToConstant: 148),
-      ringView.heightAnchor.constraint(equalToConstant: 148),
       
       cardContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       cardContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -218,23 +218,22 @@ final class MainViewController: UIViewController {
       compressorCard.leadingAnchor.constraint(equalTo: cardContainer.leadingAnchor, constant: 28),
       compressorCard.trailingAnchor.constraint(equalTo: cardContainer.trailingAnchor, constant: -28),
       
-      compressorImage.topAnchor.constraint(equalTo: compressorCard.bottomAnchor, constant: 20),
+      compressorImage.topAnchor.constraint(equalTo: compressorCard.bottomAnchor, constant: UIScreen.screenType == .small ? 10 : 20),
       compressorImage.leadingAnchor.constraint(equalTo: cardContainer.leadingAnchor, constant: 28),
       compressorImage.trailingAnchor.constraint(equalTo: cardContainer.trailingAnchor, constant: -28),
-      compressorImage.heightAnchor.constraint(equalToConstant: 155),
+      compressorImage.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: UIScreen.screenType == .small ? 0.35 : 0.42),
       
-      mediaCard.topAnchor.constraint(equalTo: compressorImage.bottomAnchor, constant: 24),
+      mediaCard.topAnchor.constraint(equalTo: compressorImage.bottomAnchor, constant: UIScreen.screenType == .small ? 10 : 20),
       mediaCard.leadingAnchor.constraint(equalTo: compressorImage.leadingAnchor),
       mediaCard.trailingAnchor.constraint(equalTo: compressorImage.trailingAnchor),
       
-      mediaThumbLeft.heightAnchor.constraint(equalToConstant: 155),
-      mediaThumbRight.heightAnchor.constraint(equalToConstant: 155),
+      mediaThumbLeft.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: UIScreen.screenType == .small ? 0.35 : 0.42),
+      mediaThumbRight.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: UIScreen.screenType == .small ? 0.35 : 0.42),
       
       imagesHStack.topAnchor.constraint(equalTo: mediaCard.bottomAnchor, constant: 20),
       imagesHStack.trailingAnchor.constraint(equalTo: cardContainer.trailingAnchor, constant: -28),
       imagesHStack.leadingAnchor.constraint(equalTo: cardContainer.leadingAnchor, constant: 28),
-      
-      imagesHStack.bottomAnchor.constraint(equalTo: cardContainer.safeAreaLayoutGuide.bottomAnchor)
+      imagesHStack.bottomAnchor.constraint(equalTo: cardContainer.safeAreaLayoutGuide.bottomAnchor, constant: -20)
     ])
   }
 }
