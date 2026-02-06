@@ -32,13 +32,13 @@ final class MainViewModel {
     
     self.compressorSection = .init(
       title: "Video Compressor",
-      subtitle: "4 Media • 54.7 GB",
+      subtitle: "4 Media • 21.7 GB",
       isLocked: !hasPhotoAccess
     )
     
     self.mediaSection = .init(
       title: "Media",
-      subtitle: "6 Media • 54.7 GB",
+      subtitle: "6 Media • 12 GB",
       isLocked: !hasPhotoAccess
     )
   }
